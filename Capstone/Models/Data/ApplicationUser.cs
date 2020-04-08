@@ -17,7 +17,7 @@ namespace Capstone.Models.Data
 
 
 
-
+        public virtual ICollection<Favorite> Favorites { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
     }
 }
