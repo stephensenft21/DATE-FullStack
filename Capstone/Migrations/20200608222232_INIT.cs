@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Capstone.Migrations
 {
-    public partial class Initial : Migration
+    public partial class INIT : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,10 +39,7 @@ namespace Capstone.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    StreetAddress = table.Column<string>(nullable: true)
+                    AccessFailedCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -156,6 +153,25 @@ namespace Capstone.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Favorite",
+                columns: table => new
+                {
+                    FavoriteId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApplicationUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Favorite", x => x.FavoriteId);
+                    table.ForeignKey(
+                        name: "FK_Favorite_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RefreshToken",
                 columns: table => new
                 {
@@ -176,6 +192,58 @@ namespace Capstone.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Text = table.Column<string>(nullable: false),
+                    CommentId = table.Column<int>(nullable: false),
+                    FavoriteId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Text);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comments_Favorite_FavoriteId",
+                        column: x => x.FavoriteId,
+                        principalTable: "Favorite",
+                        principalColumn: "FavoriteId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "00000000-ffff-ffff-ffff-ffffffffffff", 0, "a543c3e8-1219-4918-84a3-b91dd31da335", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEKmDmCwAkQJSqPLfgXm00gausB4Kl9z+Ma2F0Lme8jBh1qVRnxC+0ih1rmM/LvVHrA==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", false, "admin@admin.com" });
+
+            migrationBuilder.InsertData(
+                table: "Favorite",
+                columns: new[] { "FavoriteId", "ApplicationUserId" },
+                values: new object[] { 1, "00000000-ffff-ffff-ffff-ffffffffffff" });
+
+            migrationBuilder.InsertData(
+                table: "Favorite",
+                columns: new[] { "FavoriteId", "ApplicationUserId" },
+                values: new object[] { 2, "00000000-ffff-ffff-ffff-ffffffffffff" });
+
+            migrationBuilder.InsertData(
+                table: "Comments",
+                columns: new[] { "Text", "ApplicationUserId", "CommentId", "FavoriteId" },
+                values: new object[,]
+                {
+                    { "Hell Yeah", null, 1, 1 },
+                    { "Dope place", null, 2, 1 },
+                    { "Cool Shop", null, 3, 1 },
+                    { "This place rocks", null, 4, 2 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -218,6 +286,21 @@ namespace Capstone.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_ApplicationUserId",
+                table: "Comments",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_FavoriteId",
+                table: "Comments",
+                column: "FavoriteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favorite_ApplicationUserId",
+                table: "Favorite",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RefreshToken_UserId",
                 table: "RefreshToken",
                 column: "UserId");
@@ -241,10 +324,16 @@ namespace Capstone.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
                 name: "RefreshToken");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Favorite");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

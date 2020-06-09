@@ -4,14 +4,16 @@ using Capstone.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Capstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200608222232_INIT")]
+    partial class INIT
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,13 +90,13 @@ namespace Capstone.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a7275254-8e36-4d34-9204-aa769f06a19a",
+                            ConcurrencyStamp = "a543c3e8-1219-4918-84a3-b91dd31da335",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFftKqr/0dpgbhrT+/Z3fI/oTIo1YUn+zBhfs1p5vap2PArLtJygl4aWb3kIHoCdGw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKmDmCwAkQJSqPLfgXm00gausB4Kl9z+Ma2F0Lme8jBh1qVRnxC+0ih1rmM/LvVHrA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
@@ -140,13 +142,13 @@ namespace Capstone.Migrations
                         new
                         {
                             Text = "Cool Shop",
-                            CommentId = 1,
+                            CommentId = 3,
                             FavoriteId = 1
                         },
                         new
                         {
                             Text = "This place rocks",
-                            CommentId = 2,
+                            CommentId = 4,
                             FavoriteId = 2
                         });
                 });

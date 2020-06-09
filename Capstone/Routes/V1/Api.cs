@@ -18,10 +18,37 @@ namespace Capstone.Routes.V1
         }
 
         public static class User
-        {
+        {   
             public const string Login = Base + "/Auth/Login";
             public const string Register = Base + "/Auth/Register";
             public const string Refresh = Base + "/Auth/Refresh";
+        }
+
+        public static class Favorite
+        {
+            public const string GetAll = Base + "/Favorites";
+            public const string Get = Base + "/Favorites/{id}";
+            public const string Delete = Base + "/Favorites/{id}";
+            public const string Update = Base + "/Favorites/{id}";
+           
+
+
+
+
+
+        }
+
+
+        public static class Comment
+        {
+            public const string GetAll = Base + "/Comments";
+            public const string Get = Base + "/Comments/{id}";
+            public const string Delete = Base + "/Comments/{id}";
+            public const string Update = Base + "/Comments/{id}";
+
+
+
+
         }
     }
 }

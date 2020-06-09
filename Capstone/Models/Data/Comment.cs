@@ -13,10 +13,10 @@ namespace Capstone.Models.Data
         [Key]
         [Required(ErrorMessage = "Please Add Your Comment")]
         public string Text { get; set; }
-        [DataType(DataType.Date)]
+      /*  [DataType(DataType.Date)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime TimeStamp { get; set; }
-        [Required]
+        [Required]*/
         public int FavoriteId { get; set; }
         public string ApplicationUserId { get; set; }
 
